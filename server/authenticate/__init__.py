@@ -3,9 +3,9 @@ import json
 from fastapi import APIRouter
 from ..database import Database
 from ..models.user import User
-from ..configreader import ConfigReader
 
-baseApi = ConfigReader().baseApi()
+
+baseApi = "/api/v1"
 router = APIRouter(prefix=baseApi + "/auth/users")
 db = Database()
 

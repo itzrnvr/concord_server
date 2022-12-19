@@ -4,10 +4,9 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from datetime import datetime
 from .connection_manager import ConnectionManager
 from ..database import Database
-from ..configreader import ConfigReader
 from ..models.message import Message, EditMessage
 
-baseApi = ConfigReader().baseApi()
+baseApi = "/api/v1"
 router = APIRouter(prefix=baseApi + "/chats")
 db = Database()
 manager = ConnectionManager()
