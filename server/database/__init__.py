@@ -24,7 +24,7 @@ class Database:
         return dat
 
     def login(self, user):
-        response = {}
+        response = {0: "None"}
         dbUser = self.findUser(user.username)
         if dbUser[0]:
             if dbUser[1].password == user.password:
