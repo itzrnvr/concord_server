@@ -4,7 +4,6 @@ from fastapi import APIRouter
 from ..database import Database
 from ..models.user import User
 
-
 baseApi = "/api/v1"
 router = APIRouter(prefix=baseApi + "/auth/users")
 db = Database()
@@ -18,6 +17,11 @@ async def login(user: User):
 @router.post("/register")
 async def register(user: User):
     return db.register(user)
+
+
+@router.get("/all")
+async def getAllUsers():
+    return db.getAllUsers()
 
 
 @router.delete("/remove/{userID}")

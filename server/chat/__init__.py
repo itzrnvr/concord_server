@@ -19,14 +19,17 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     current_time = now.strftime("%H:%M")
     try:
         while True:
-            jsonData = await websocket.receive_text()
-            username = json.loads(jsonData)["username"]
-            mes = json.loads(jsonData)["message"]
+            rawData = await websocket.receive_text()
+            jsonData = json.loads(rawData)
+            pfp = jsonData["pfp"]
+            username = jsonData["username"]
+            mes = jsonData["message"]
             message = {"time": current_time,
                        "clientId": client_id,
+                       "pfp": pfp,
                        "username": username,
-                       "message": mes}
-            db.addChat(username, mes)
+                       "message": mes }
+            db.addChat(pfp, username, mes)
             await manager.broadcast(json.dumps(message))
 
     except WebSocketDisconnect:

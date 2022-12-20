@@ -36,7 +36,7 @@ class Database:
         response = {}
         dbUser = self.findUser(user.username)
         if not dbUser[0]:
-            newUser = User(username=user.username, password=user.password)
+            newUser = User(pfp=user.pfp, username=user.username, password=user.password)
             db.append(newUser)
             response = newUser
 
@@ -51,11 +51,13 @@ class Database:
     def getAllUsers(self):
         users = []
         for user in db:
-            users.append({user.id, user.username, user.password})
+            users.append({"id": str(user.id),
+                          "pfp": user.pfp,
+                          "username": user.username})
         return json.dumps(users)
 
-    def addChat(self, username, message):
-        messagesDb.append(Message(username=str(username), message=message))
+    def addChat(self, pfp, username, message):
+        messagesDb.append(Message(pfp=pfp, username=str(username), message=message))
 
     def editMessage(self, editMes: EditMessage):
         for i, mes in enumerate(messagesDb):
@@ -73,6 +75,7 @@ class Database:
         messages = []
         for message in messagesDb:
             messages.append({"mId": str(message.id),
+                             "pfp": message.pfp,
                              "username": message.username,
                              "message": message.message})
         return json.dumps(messages)
